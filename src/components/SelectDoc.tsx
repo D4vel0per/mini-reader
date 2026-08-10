@@ -10,10 +10,7 @@ export function DocumentSelector() {
         const result = await DPK.getDocumentAsync({
             copyToCacheDirectory: true,
             type: [
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "application/vnd.oasis.opendocument.text",
+                "application/epub+zip"
             ]
         });
         if (result.canceled) return;
