@@ -33,7 +33,18 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "coreLibraryDesugaringEnabled": true
+          }
+        }
+      ],
+      "./withCustomAppBuildGradle.js"
     ],
     "experiments": {
       "typedRoutes": true,
