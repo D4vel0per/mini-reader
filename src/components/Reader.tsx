@@ -11,26 +11,13 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { RefObject, useEffect, useRef, useState } from "react";
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, TextInput } from 'react-native';
 import { ReadiumView } from "react-native-readium";
 
 interface ReaderProps {
     uri: string;
     userTint: string;
     username: string;
-}
-
-interface CommentProps {
-    text: string
-    username: string
-}
-
-function Comment ({ text, username }: CommentProps) {
-    return (
-        <View>
-            <Text>{username} - { text }</Text>
-        </View>
-    )
 }
 
 function fromDecorations(groups: DecorationGroup[], key: string) {
@@ -69,8 +56,6 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
 
     const [ commentSelected, setCommentSelected ] = useState<DecorationOverrideExtra|null>(null)
 
-    const [ commentText, setCommentText ] = useState("")
-
     useEffect(() => {
         const comments = fromDecorations(decorations, "comments")
 
@@ -91,7 +76,7 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
             },
             extras: {
                 text: "",
-                username: "admin"
+                username: username
             }
         }
 
@@ -181,7 +166,6 @@ interface ReadCommentProps {
 }
 
 function ReadComment ({ sheetRef, selectedComment }: ReadCommentProps) {
-
     return (<>
     <Button title="Close" onPress={() => sheetRef.current?.close()}/>
     <Text style={{fontWeight: "bold"}}>{selectedComment.username}</Text>
