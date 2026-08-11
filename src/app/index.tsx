@@ -1,11 +1,15 @@
 import { StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DocumentSelector } from "../components/SelectDoc";
 
 export default function Index() {
   return (
-    <View style={styles.container}>
-      <DocumentSelector />
-    </View>
+    <GestureHandlerRootView>
+      <View style={styles.container}>
+        <DocumentSelector />
+      </View>
+    </GestureHandlerRootView>
+    
   );
 }
 
