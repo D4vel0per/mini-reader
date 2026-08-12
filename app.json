@@ -40,7 +40,7 @@
           "android": {
             "compileSdkVersion": 36,
             "targetSdkVersion": 36,
-            "coreLibraryDesugaringEnabled": true
+            "usesCleartextTraffic": true
           }
         }
       ],
