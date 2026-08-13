@@ -10,7 +10,7 @@ module.exports = function withCustomAppBuildGradle(config) {
    const androidPattern = '\nandroid {\n';
    const dependenciesPattern = '\ndependencies {\n';
    const androidText = '   compileOptions {\n        coreLibraryDesugaringEnabled true\n    }\n\n '
-   const dependenciesText = '   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")\n\n '
+   const dependenciesText = '   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.2")\n\n '
    let { contents } = config.modResults
 
    contents = insert(contents, androidPattern, androidText)

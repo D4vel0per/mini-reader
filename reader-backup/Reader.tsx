@@ -1,4 +1,4 @@
-import type {
+/*import type {
     Decoration,
     DecorationActivatedEvent,
     DecorationGroup,
@@ -171,4 +171,4 @@ function ReadComment ({ sheetRef, selectedComment }: ReadCommentProps) {
     <Text style={{fontWeight: "bold"}}>{selectedComment.username}</Text>
     <Text>{selectedComment.text}</Text>
     </>)
-}
+}*/
