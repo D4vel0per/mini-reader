@@ -39,7 +39,8 @@
         {
           "android": {
             "compileSdkVersion": 36,
-            "targetSdkVersion": 36
+            "targetSdkVersion": 36,
+            "usesCleartextTraffic": true
           }
         }
       ],
