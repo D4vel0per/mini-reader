@@ -1,4 +1,4 @@
-/*import type {
+import type {
     Decoration,
     DecorationActivatedEvent,
     DecorationGroup,
@@ -7,11 +7,11 @@
     SelectionActionEvent
 } from 'react-native-readium';
 
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { RefObject, useEffect, useRef, useState } from "react";
-import { Button, Text, TextInput } from 'react-native';
+import { Button, Text, TextInput, View } from 'react-native';
 import { ReadiumView } from "react-native-readium";
 
 interface ReaderProps {
@@ -113,19 +113,25 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
         sheet.current?.expand()
     }
 
+    console.log(file)
+
     return (
         <>
-        <ReadiumView 
+        <Text>Your book is ready:</Text>
+        <View style={{flex: 1}}>
+           <ReadiumView 
         file={file}
-        preferences={{}} 
-        selectionActions={actions}
-        decorations={decorations}
-        onSelectionAction={onSelection}
-        onDecorationActivated={onCommentPressed}
-        />
-        <BottomSheet 
+        preferences={{}}
+        style={{ flex: 1 }}
+        //selectionActions={actions}
+        //decorations={decorations}
+        //onSelectionAction={onSelection}
+        //onDecorationActivated={onCommentPressed}
+        /> 
+        </View>
+        </>)
+        { /* <BottomSheet 
         ref={sheet}
-        enableDynamicSizing={false}
         onClose={() => {
             setCommentSelected(null)
             setCommentEditingId(null)  //Cleanup
@@ -142,8 +148,9 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
                 }
             </BottomSheetView>
         </BottomSheet>
-        </>
-    )
+        </> */ }
+        
+    
 }
 
 interface WriteCommentMenuProps {
@@ -171,4 +178,4 @@ function ReadComment ({ sheetRef, selectedComment }: ReadCommentProps) {
     <Text style={{fontWeight: "bold"}}>{selectedComment.username}</Text>
     <Text>{selectedComment.text}</Text>
     </>)
-}*/
+}

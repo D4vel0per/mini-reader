@@ -39,12 +39,12 @@
         {
           "android": {
             "compileSdkVersion": 36,
-            "targetSdkVersion": 36,
-            "usesCleartextTraffic": true
+            "targetSdkVersion": 36
           }
         }
       ],
-      "./withCustomAppBuildGradle.js"
+      "./withCustomAppBuildGradle.js",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,
