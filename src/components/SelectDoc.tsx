@@ -21,7 +21,7 @@ export function DocumentSelector() {
     };
 
     return (
-        <View>
+        <View style={{ backgroundColor: "blue", flex: 1}}>
             <Text>Select a document</Text>
             <Text>Supported formats: epub</Text>
             <Button title="Select a File to display" onPress={handleFileSelect}></Button>

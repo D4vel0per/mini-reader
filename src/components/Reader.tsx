@@ -3,16 +3,18 @@ import type {
     DecorationActivatedEvent,
     DecorationGroup,
     File,
+    ReadiumViewRef,
     SelectionAction,
     SelectionActionEvent
 } from 'react-native-readium';
 
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Button, Text, TextInput, View } from 'react-native';
 import { ReadiumView } from "react-native-readium";
+
 
 interface ReaderProps {
     uri: string;
@@ -38,6 +40,7 @@ interface DecorationOverride extends Decoration {
 export default function Reader({ uri, userTint, username }: ReaderProps) {
     const [ file] = useState<File>({
         url: uri,
+        initialLocation: { href: "", type: "" }
     });
 
     const sheet = useRef<BottomSheet>(null)
@@ -113,24 +116,22 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
         sheet.current?.expand()
     }
 
-    console.log(file)
+    const readiumRef = useRef<ReadiumViewRef>(null)
 
     return (
-        <>
-        <Text>Your book is ready:</Text>
-        <View style={{flex: 1}}>
-           <ReadiumView 
+        <View>
+        <ReadiumView 
+        ref={readiumRef}
         file={file}
         preferences={{}}
-        style={{ flex: 1 }}
-        //selectionActions={actions}
-        //decorations={decorations}
-        //onSelectionAction={onSelection}
-        //onDecorationActivated={onCommentPressed}
-        /> 
-        </View>
-        </>)
-        { /* <BottomSheet 
+        selectionActions={actions}
+        decorations={decorations}
+        onSelectionAction={onSelection}
+        onDecorationActivated={onCommentPressed}
+        onPublicationReady={() => console.log("publication ready")}
+        />
+        
+        <BottomSheet 
         ref={sheet}
         onClose={() => {
             setCommentSelected(null)
@@ -148,9 +149,7 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
                 }
             </BottomSheetView>
         </BottomSheet>
-        </> */ }
-        
-    
+        </View>)
 }
 
 interface WriteCommentMenuProps {

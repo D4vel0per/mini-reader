@@ -39,10 +39,12 @@
         {
           "android": {
             "compileSdkVersion": 36,
-            "targetSdkVersion": 36
+            "targetSdkVersion": 36,
+            "enableCoreLibraryDesugaring": true
           }
         }
       ],
+      "./withKotlinxDatetime.js",
       "./withCustomAppBuildGradle.js",
       "expo-image"
     ],
