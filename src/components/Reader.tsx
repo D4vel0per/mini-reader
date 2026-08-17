@@ -8,11 +8,11 @@ import type {
     SelectionActionEvent
 } from 'react-native-readium';
 
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetTextInput, BottomSheetView } from "@gorhom/bottom-sheet";
 
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { RefObject, useEffect, useRef, useState } from "react";
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Keyboard, Text, View } from 'react-native';
 import { ReadiumView } from "react-native-readium";
 
 
@@ -89,14 +89,25 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
 
         sheet.current?.expand()
 
-        
+        console.log("SETTING DECORATIONSSSS", decorations)
+
+        setDecorations(prev => prev.map(e => {
+            let g = {...e}
+            if (g.name === "comments") {
+                console.log(g.decorations)
+                g.decorations = [ ...g.decorations, commentDecoration ]
+            }
+            return g
+        }))
     }
 
     const editCommentById = (id: string, text: string) => { // Look for the specific comment using its id and change the text.
         setDecorations(prev => prev.map(group => {
             if (group.name !== "comments") return group
 
-            group.decorations = group.decorations.map(e => {
+            let newGroup = {...group}
+
+            newGroup.decorations = newGroup.decorations.map(e => {
                 if (e.id === id && e.extras) {
                     e.extras.text = text
                     sheet.current?.close()
@@ -105,7 +116,7 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
                 return e
             })
 
-            return group
+            return newGroup
         }))
 
     }
@@ -119,7 +130,8 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
     const readiumRef = useRef<ReadiumViewRef>(null)
 
     return (
-        <View>
+        <>
+        <Button title="Next" onPress={() => { readiumRef.current?.goForward() }} />
         <ReadiumView 
         ref={readiumRef}
         file={file}
@@ -130,6 +142,8 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
         onDecorationActivated={onCommentPressed}
         onPublicationReady={() => console.log("publication ready")}
         />
+
+        
         
         <BottomSheet 
         ref={sheet}
@@ -137,7 +151,9 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
             setCommentSelected(null)
             setCommentEditingId(null)  //Cleanup
             setShowCommentMenu(false)
+            Keyboard.dismiss()
         }}
+        keyboardBehavior='fillParent'
         >
             <BottomSheetView>
                 { 
@@ -147,9 +163,10 @@ export default function Reader({ uri, userTint, username }: ReaderProps) {
                 <ReadComment sheetRef={sheet} selectedComment={commentSelected} />
                 
                 }
+                
             </BottomSheetView>
         </BottomSheet>
-        </View>)
+        </>)
 }
 
 interface WriteCommentMenuProps {
@@ -159,11 +176,11 @@ interface WriteCommentMenuProps {
 
 function WriteCommentMenu ({ submitAction, commentId }: WriteCommentMenuProps) {
     const [ commentText, setCommentText ] = useState("")
-    return (<>
+    return (<View style={{padding: 30, paddingBottom: 60}}>
     <Text>Write a Comment:</Text>
-    <TextInput value={commentText} onChangeText={text => setCommentText(text)}/>
+    <BottomSheetTextInput value={commentText} onChangeText={text => setCommentText(text)}/>
     <Button title="Submit" onPress={() => submitAction(commentId, commentText)}/>
-    </>)
+    </View>)
 }
 
 interface ReadCommentProps {
@@ -172,9 +189,9 @@ interface ReadCommentProps {
 }
 
 function ReadComment ({ sheetRef, selectedComment }: ReadCommentProps) {
-    return (<>
+    return (<View style={{padding: 30, paddingBottom: 60}}>
     <Button title="Close" onPress={() => sheetRef.current?.close()}/>
     <Text style={{fontWeight: "bold"}}>{selectedComment.username}</Text>
     <Text>{selectedComment.text}</Text>
-    </>)
+    </View>)
 }
